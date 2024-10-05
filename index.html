@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetic Level Detection Using Deep Learning</title>
+    <style>
+        body {
+            background-image: url("wp2616571.webp");
+            font-family: 'Arial', sans-serif;
+            background-size: cover;
+            color:black;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-image: url("wp2616571.webp");
+            padding: 20px;
+            text-align: center;
+            color: black;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .container {
+           
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .content-block {
+           background-image: url("wp2616571.webp");
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-input {
+            margin: 10px 0;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-image: url("wp2616571.webp");
+            color:black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-image: url("wp2616571.webp");
+        }
+
+        footer {
+            background-image: url("wp2616571.webp");
+            background-size: initial;
+            color: black;
+            text-align: center;
+            padding: 3px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+       
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Diabetic Level Detection Using Deep Learning Networks</h1>
+</header>
+
+<section class="container">
+    <!-- Introduction Section -->
+    <div class="content-block">
+        <h2>Introduction</h2>
+    
+       <center>
+        <div class="image-container">
+            <img src="OIP.jpeg">
+        </div>
+       </center>
+        <p>This project leverages deep learning to detect diabetic levels in patients. With advanced machine learning algorithms, we aim to provide accurate predictions based on medical images and patient data, helping healthcare professionals in decision-making.</p>
+    </div>
+
+    <!-- How it Works Section -->
+    <div class="content-block">
+        <h2>How It Works</h2>
+       <center>
+         <div class="image-container">
+            <img src="NeuralNet.webp" alt="NeuralNet"height="250">
+        </div>
+       </center>
+        
+        <ol>
+            
+            <li>Based on your input image the retinal scanned</li>
+            <li>Prediction: The trained model provides a prediction on whether a patient has diabetes or the severity of their condition.</li>
+        </ol>
+    </div>
+
+    <!-- Image Upload Section -->
+    <div class="content-block">
+        <h2>Upload Medical Images</h2>
+        <form id="imageUploadForm">
+            <input type="file" class="file-input" id="imageInput" accept="image/*" />
+            <button type="button" onclick="uploadImage()">Upload Image</button>
+        </form>
+        <div class="image-preview" id="imagePreview"></div>
+    </div>
+    <h3>Or capture an image using your camera:</h3>
+        <button type="button" onclick="openCamera()">Open Camera</button>
+        <div id="camera-container">
+            <video id="camera-stream" class="camera-preview" autoplay></video><br>
+            <button type="button" onclick="captureImage()">Capture Image</button>
+        </div>
+        <div class="image-preview" id="imagePreview"></div>
+    </div>
+
+    <!-- Detection Simulation Section -->
+    <div class="content-block">
+        <h2>Run Detection Simulation</h2>
+         <p>Once you upload the medical image, click the button below to simulate the diabetic level detection.</p>
+        <button onclick="simulateDetection()">Simulate Detection</button>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+    <p>Diabetic Detection Project &copy; 2024</p>
+</footer>
+
+<script>
+    // Image Upload Preview
+    function uploadImage() {
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const file = imageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                imagePreview.innerHTML = ''; // Clear previous preview
+                imagePreview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert("Please select an image to upload.");
+        }
+    }
+    function openCamera() {
+        const cameraStream = document.getElementById('camera-stream');
+        const cameraContainer = document.getElementById('camera-container');
+
+        // Check if media devices are supported
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    cameraStream.srcObject = stream;
+                    cameraContainer.style.display = 'block'; // Show camera preview
+                })
+                .catch(function(err) {
+                    alert("Error accessing camera: " + err.message);
+                });
+        } else {
+            alert("Your browser does not support camera access.");
+        }
+    }
+
+    // Capture Image from Camera Stream
+    function captureImage() {
+        const video = document.getElementById('camera-stream');
+        const canvas = document.createElement('canvas');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // Set canvas dimensions equal to the video stream
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // Draw video frame to canvas
+        canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+        // Create an image from the canvas and display it in preview
+        const img = document.createElement('img');
+        img.src = canvas.toDataURL('image/png');
+        imagePreview.innerHTML = ''; // Clear previous preview
+        imagePreview.appendChild(img);
+    }
+
+    // Simulate Detection (Placeholder)
+    function simulateDetection() {
+        alert("Simulating diabetic level detection. This is a placeholder for the deep learning model process.");
+    }
+</script>
+
+</body>
+</html>
